@@ -1,0 +1,4 @@
+chmod +x daly.sh && ./daly.sh
+
+chmod +x setup.sh && ./setup.sh
+
