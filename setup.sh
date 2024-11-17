@@ -38,6 +38,13 @@ ask_user() {
     esac
 }
 
+prompt_for_input() {
+    local prompt_message=$1
+    local input_var
+    read -p "$prompt_message: " input_var
+    echo "$input_var"
+}
+
 add_delay() {
     local seconds=$1
     log "Waiting for $seconds seconds to prevent CPU overloading..."
@@ -88,111 +95,108 @@ should_run_service() {
     fi
 }
 
-# Screen: vanamine
-if should_run_service "vanamine"; then
-    if check_screen "vanamine"; then
-        run_in_screen "vanamine" "
-            cd $SCRIPT_DIR/Vananode/miner &&
-            docker-compose up -d
-        "
-        log "Detached screen: vanamine"
-        add_delay 10
-    fi
-fi
+# Service definitions
+run_vanamine() {
+    run_in_screen "vanamine" "
+        cd $SCRIPT_DIR/Vananode/miner &&
+        docker-compose up -d
+    "
+    log "Detached screen: vanamine"
+    add_delay 10
+}
 
-# Screen: blockmesh
-if should_run_service "blockmesh"; then
-    if check_screen "blockmesh"; then
-        run_in_screen "blockmesh" "
-            cd $SCRIPT_DIR/Blockmesh &&
-            chmod +x blockmesh.sh &&
-            ./blockmesh.sh
-        "
-        log "Detached screen: blockmesh"
-        add_delay 10
-    fi
-fi
+run_blockmesh() {
+    run_in_screen "blockmesh" "
+        cd $SCRIPT_DIR/Blockmesh &&
+        chmod +x blockmesh.sh &&
+        ./blockmesh.sh
+    "
+    log "Detached screen: blockmesh"
+    add_delay 10
+}
 
-# Screen: hemimine
-if should_run_service "hemimine"; then
-    if check_screen "hemimine"; then
-        run_in_screen "hemimine" "
-            cd $SCRIPT_DIR/HemiPop/heminetwork_v0.5.0_linux_amd64 &&
-            ./keygen -secp256k1 -json -net='testnet' > ~/popm-address.json
-        "
-        if ask_user "Do you want to use custom keys for hemimine?" "n"; then
-            run_command "chmod +x $SCRIPT_DIR/HemiPop/heminetwork_v0.5.0_linux_amd64/hemichange.sh"
-            run_command "$SCRIPT_DIR/HemiPop/heminetwork_v0.5.0_linux_amd64/hemichange.sh"
-        else
-            log "Using default keys for hemimine. Ensure you save your keys securely!"
-        fi
-        run_command "chmod +x $SCRIPT_DIR/HemiPop/heminetwork_v0.5.0_linux_amd64/popstart.sh"
-        run_command "$SCRIPT_DIR/HemiPop/heminetwork_v0.5.0_linux_amd64/popstart.sh"
-        log "Detached screen: hemimine"
-        add_delay 10
+run_hemimine() {
+    run_in_screen "hemimine" "
+        cd $SCRIPT_DIR/HemiPop/heminetwork_v0.5.0_linux_amd64 &&
+        ./keygen -secp256k1 -json -net='testnet' > ~/popm-address.json
+    "
+    if ask_user "Do you want to use custom keys for hemimine?" "n"; then
+        run_command "chmod +x $SCRIPT_DIR/HemiPop/heminetwork_v0.5.0_linux_amd64/hemichange.sh"
+        run_command "$SCRIPT_DIR/HemiPop/heminetwork_v0.5.0_linux_amd64/hemichange.sh"
+    else
+        log "Using default keys for hemimine. Ensure you save your keys securely!"
     fi
-fi
+    run_command "chmod +x $SCRIPT_DIR/HemiPop/heminetwork_v0.5.0_linux_amd64/popstart.sh"
+    run_command "$SCRIPT_DIR/HemiPop/heminetwork_v0.5.0_linux_amd64/popstart.sh"
+    log "Detached screen: hemimine"
+    add_delay 10
+}
 
-# Screen: icn
-if should_run_service "icn"; then
-    if check_screen "icn"; then
-        run_in_screen "icn" "
-            cd $SCRIPT_DIR/ICN/icn-docker &&
-            docker build -t icn_installer . &&
-            docker run --name icn_container icn_installer
-        "
-        log "Detached screen: icn"
-        add_delay 10
-    fi
-fi
+run_icn() {
+    run_in_screen "icn" "
+        cd $SCRIPT_DIR/ICN/icn-docker &&
+        docker build -t icn_installer . &&
+        docker run --name icn_container icn_installer
+    "
+    log "Detached screen: icn"
+    add_delay 10
+}
 
-# Screen: nillion
-if should_run_service "nillion"; then
-    if check_screen "nillion"; then
-        run_in_screen "nillion" "
-            cd $SCRIPT_DIR/Nillion &&
-            docker pull nillion/verifier:v1.0.1 &&
-            docker run -v $SCRIPT_DIR/Nillion/nillion/verifier:/var/tmp nillion/verifier:v1.0.1 initialise
-        "
-        if ask_user "Do you want to use custom keys for nillion?" "n"; then
-            run_command "chmod +x $SCRIPT_DIR/Nillion/nilchange.sh"
-            run_command "$SCRIPT_DIR/Nillion/nilchange.sh"
-        else
-            log "Using default keys for nillion. Ensure you save your keys securely!"
-        fi
-        run_command "docker run -d -v $SCRIPT_DIR/Nillion/nillion/verifier:/var/tmp nillion/verifier:v1.0.1 verify --rpc-endpoint 'https://testnet-nillion-rpc.lavenderfive.com'"
-        log "Detached screen: nillion"
-        add_delay 10
+run_nillion() {
+    run_in_screen "nillion" "
+        cd $SCRIPT_DIR/Nillion &&
+        docker pull nillion/verifier:v1.0.1 &&
+        docker run -v $SCRIPT_DIR/Nillion/nillion/verifier:/var/tmp nillion/verifier:v1.0.1 initialise
+    "
+    if ask_user "Do you want to use custom keys for nillion?" "n"; then
+        run_command "chmod +x $SCRIPT_DIR/Nillion/nilchange.sh"
+        run_command "$SCRIPT_DIR/Nillion/nilchange.sh"
+    else
+        log "Using default keys for nillion. Ensure you save your keys securely!"
     fi
-fi
+    run_command "docker run -d -v $SCRIPT_DIR/Nillion/nillion/verifier:/var/tmp nillion/verifier:v1.0.1 verify --rpc-endpoint 'https://testnet-nillion-rpc.lavenderfive.com'"
+    log "Detached screen: nillion"
+    add_delay 10
+}
 
-# Screen: titan
-if should_run_service "titan"; then
-    if check_screen "titan"; then
-        run_in_screen "titan" "
-            cd $SCRIPT_DIR/Titan &&
-            chmod +x titan.sh &&
-            ./titan.sh &&
-            chmod +x titan.sh &&
-            ./titan.sh
-        "
-        log "Detached screen: titan"
-        add_delay 10
-    fi
-fi
+run_titan() {
+    run_in_screen "titan" "
+        cd $SCRIPT_DIR/Titan &&
+        chmod +x titan.sh &&
+        ./titan.sh
+    "
 
-# Screen: volara
-if should_run_service "volara"; then
-    if check_screen "volara"; then
-        run_in_screen "volara" "
-            cd $SCRIPT_DIR/Volara &&
-            chmod +x volara.sh &&
-            ./volara.sh
-        "
-        log "Detached screen: volara"
-        add_delay 10
-    fi
-fi
+    log "Titan is running in a screen session. Waiting briefly to attach and provide input..."
+    sleep 5  # Wait to ensure the script initializes
+
+    log "Prompting the user for input..."
+    titan_input=$(prompt_for_input "Enter the required input for titan.sh")
+
+    log "Attaching to the 'titan' screen session to provide input..."
+    screen -S titan -X stuff "${titan_input}\n"
+
+    log "Input sent to the 'titan' screen session. Detaching..."
+    add_delay 10
+}
+
+run_volara() {
+    run_in_screen "volara" "
+        cd $SCRIPT_DIR/Volara &&
+        chmod +x volara.sh &&
+        ./volara.sh
+    "
+    log "Detached screen: volara"
+    add_delay 10
+}
+
+# Service Execution
+if should_run_service "vanamine"; then check_screen "vanamine" && run_vanamine; fi
+if should_run_service "blockmesh"; then check_screen "blockmesh" && run_blockmesh; fi
+if should_run_service "hemimine"; then check_screen "hemimine" && run_hemimine; fi
+if should_run_service "icn"; then check_screen "icn" && run_icn; fi
+if should_run_service "nillion"; then check_screen "nillion" && run_nillion; fi
+if should_run_service "titan"; then check_screen "titan" && run_titan; fi
+if should_run_service "volara"; then check_screen "volara" && run_volara; fi
 
 log "Setup process completed successfully!"
 log "Check the log file: $LOG_FILE for details."
