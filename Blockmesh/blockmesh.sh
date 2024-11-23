@@ -24,9 +24,6 @@ sleep 2
 # Update and upgrade system packages
 apt update && apt upgrade -y
 
-# Clean up old files
-rm -rf blockmesh-cli.tar.gz target
-
 # Install Docker if not already installed
 if ! command -v docker &> /dev/null; then
     echo "Installing Docker..."
@@ -47,15 +44,7 @@ echo "Installing Docker Compose..."
 curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 
-# Create target directory for extraction
-mkdir -p target/release
-
-# Download and extract the latest BlockMesh CLI
-echo "Downloading and extracting BlockMesh CLI..."
-curl -L https://github.com/block-mesh/block-mesh-monorepo/releases/download/v0.0.358/blockmesh-cli-x86_64-unknown-linux-gnu.tar.gz -o blockmesh-cli.tar.gz
-tar -xzf blockmesh-cli.tar.gz --strip-components=3 -C target/release
-
-# Verify extraction result
+# Verify BlockMesh CLI executable in the extracted directory
 if [[ ! -f target/release/blockmesh-cli ]]; then
     echo "Error: blockmesh-cli executable not found in target/release. Exiting..."
     exit 1
