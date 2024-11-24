@@ -189,6 +189,16 @@ run_volara() {
     add_delay 10
 }
 
+run_glacier() {
+    run_in_screen "glacier" "
+        cd $SCRIPT_DIR/Glacier &&
+        chmod +x glacier.sh &&
+        ./glacier.sh
+    "
+    log "Detached screen: glacier"
+    add_delay 10
+}
+
 # Service Execution
 if should_run_service "vanamine"; then check_screen "vanamine" && run_vanamine; fi
 if should_run_service "blockmesh"; then check_screen "blockmesh" && run_blockmesh; fi
@@ -197,6 +207,7 @@ if should_run_service "icn"; then check_screen "icn" && run_icn; fi
 if should_run_service "nillion"; then check_screen "nillion" && run_nillion; fi
 if should_run_service "titan"; then check_screen "titan" && run_titan; fi
 if should_run_service "volara"; then check_screen "volara" && run_volara; fi
+if should_run_service "glacier"; then check_screen "glacier" && run_glacier; fi
 
 log "Setup process completed successfully!"
 log "Check the log file: $LOG_FILE for details."

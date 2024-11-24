@@ -55,7 +55,7 @@ cd HemiPop/heminetwork_v0.5.0_linux_amd64 || {
 }
 chmod +x popstart.sh && ./popstart.sh
 
-# Step 4a: Run Glacier script
+# Step 5: Run Glacier script
 echo "Running Glacier script..."
 cd ../../Glacier || {
     echo "Failed to find Glacier directory."
@@ -63,7 +63,7 @@ cd ../../Glacier || {
 }
 chmod +x glacier.sh && ./glacier.sh
 
-# Step 5: Display running Docker containers
+# Step 6: Display running Docker containers
 echo "Final list of running Docker containers:"
 docker ps
 

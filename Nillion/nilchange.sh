@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Set directories
-BASE_DIR="/workspaces/node61/Nillion"
-VERIFIER_DIR="$BASE_DIR/nillion/verifier"
+# Set directories dynamically
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+VERIFIER_DIR="$BASE_DIR/verifier"
 ENV_FILE="$BASE_DIR/nil.env"
 CREDENTIALS_FILE="$VERIFIER_DIR/credentials.json"
 
