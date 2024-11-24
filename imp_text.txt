@@ -2,3 +2,10 @@ chmod +x daly.sh && ./daly.sh
 
 chmod +x setup.sh && ./setup.sh
 
+sudo apt-get install dos2unix
+
+dos2unix daily.sh
+
+chmod +x daily.sh && ./daily.sh
+
+chmod +x glacier.sh && ./glacier.sh
