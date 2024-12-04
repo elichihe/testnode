@@ -132,32 +132,31 @@ run_hemimine() {
     add_delay 10
 }
 
-run_icn() {
-    run_in_screen "icn" "
-        cd $SCRIPT_DIR/ICN/icn-docker &&
-        docker build -t icn_installer . &&
-        docker run --name icn_container icn_installer
-    "
-    log "Detached screen: icn"
-    add_delay 10
-}
-
 run_nillion() {
-    run_in_screen "nillion" "
-        cd $SCRIPT_DIR/Nillion &&
-        docker pull nillion/verifier:v1.0.1 &&
-        docker run -v $SCRIPT_DIR/Nillion/nillion/verifier:/var/tmp nillion/verifier:v1.0.1 initialise
-    "
+    log "Pulling Nillion verifier image..."
+    run_command "docker pull nillion/verifier:v1.0.1"
+
+    log "Ensuring verifier directory exists..."
+    run_command "mkdir -p $SCRIPT_DIR/Nillion/nillion/verifier"
+
+    log "Initializing Nillion verifier..."
+    run_command "docker run -v $SCRIPT_DIR/Nillion/nillion/verifier:/var/tmp nillion/verifier:v1.0.1 initialise"
+
+    log "Verifier initialization complete. Proceeding to custom key setup..."
     if ask_user "Do you want to use custom keys for nillion?" "n"; then
+        log "Setting up custom keys for Nillion..."
         run_command "chmod +x $SCRIPT_DIR/Nillion/nilchange.sh"
         run_command "$SCRIPT_DIR/Nillion/nilchange.sh"
     else
-        log "Using default keys for nillion. Ensure you save your keys securely!"
+        log "Using default keys for Nillion. Ensure you save your keys securely!"
     fi
+
+    log "Starting Nillion verifier in detached mode..."
     run_command "docker run -d -v $SCRIPT_DIR/Nillion/nillion/verifier:/var/tmp nillion/verifier:v1.0.1 verify --rpc-endpoint 'https://testnet-nillion-rpc.lavenderfive.com'"
     log "Detached screen: nillion"
     add_delay 10
 }
+
 
 run_titan() {
     run_in_screen "titan" "
@@ -177,37 +176,20 @@ run_titan() {
 
     log "Input sent to the 'titan' screen session. Detaching..."
     add_delay 10
-}
 
-run_volara() {
-    run_in_screen "volara" "
-        cd $SCRIPT_DIR/Volara &&
-        chmod +x volara.sh &&
-        ./volara.sh
-    "
-    log "Detached screen: volara"
-    add_delay 10
-}
-
-run_glacier() {
-    run_in_screen "glacier" "
-        cd $SCRIPT_DIR/Glacier &&
-        chmod +x glacier.sh &&
-        ./glacier.sh
-    "
-    log "Detached screen: glacier"
-    add_delay 10
+    # Bind Titan container with hash key
+    docker_command="docker run --rm -it -v ~/.titanedge:/root/.titanedge nezha123/titan-edge bind --hash=hashkey https://api-test1.container1.titannet.io/api/v2/device/binding"
+    hashkey=$(prompt_for_input "Enter the hash key for Titan binding")
+    log "Running Titan bind command with hash key..."
+    run_command "${docker_command//hashkey/$hashkey}"
 }
 
 # Service Execution
 if should_run_service "vanamine"; then check_screen "vanamine" && run_vanamine; fi
 if should_run_service "blockmesh"; then check_screen "blockmesh" && run_blockmesh; fi
 if should_run_service "hemimine"; then check_screen "hemimine" && run_hemimine; fi
-if should_run_service "icn"; then check_screen "icn" && run_icn; fi
 if should_run_service "nillion"; then check_screen "nillion" && run_nillion; fi
 if should_run_service "titan"; then check_screen "titan" && run_titan; fi
-if should_run_service "volara"; then check_screen "volara" && run_volara; fi
-if should_run_service "glacier"; then check_screen "glacier" && run_glacier; fi
 
 log "Setup process completed successfully!"
 log "Check the log file: $LOG_FILE for details."

@@ -1,9 +1,11 @@
 #!/bin/bash
 
-# Set directories dynamically
+# Dynamically set base directory
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-VERIFIER_DIR="$BASE_DIR/verifier"
-ENV_FILE="$BASE_DIR/nil.env"
+WORKSPACE_DIR="$(dirname "$BASE_DIR")"
+NILLION_DIR="$WORKSPACE_DIR/Nillion"
+VERIFIER_DIR="$NILLION_DIR/nillion/verifier"
+ENV_FILE="$NILLION_DIR/nil.env"
 CREDENTIALS_FILE="$VERIFIER_DIR/credentials.json"
 
 # Function to read JSON keys from nil.env
@@ -13,16 +15,22 @@ read_env_var() {
 }
 
 # Remove existing credentials.json
-remove_old_credentials() {
+remove_existing_credentials() {
     if [ -f "$CREDENTIALS_FILE" ]; then
-        echo "Removing existing $CREDENTIALS_FILE..."
+        echo "Existing $CREDENTIALS_FILE found. Deleting it..."
         rm -f "$CREDENTIALS_FILE"
+        if [ $? -eq 0 ]; then
+            echo "Successfully deleted $CREDENTIALS_FILE."
+        else
+            echo "Error: Failed to delete $CREDENTIALS_FILE."
+            exit 1
+        fi
     else
-        echo "No existing $CREDENTIALS_FILE found."
+        echo "No existing $CREDENTIALS_FILE found. Proceeding to create a new one."
     fi
 }
 
-# Create new credentials.json
+# Create a new credentials.json
 create_new_credentials() {
     echo "Creating new $CREDENTIALS_FILE..."
 
@@ -37,6 +45,9 @@ create_new_credentials() {
         exit 1
     fi
 
+    # Ensure verifier directory exists
+    mkdir -p "$VERIFIER_DIR"
+
     # Create the credentials.json
     cat <<EOF > "$CREDENTIALS_FILE"
 {
@@ -46,12 +57,17 @@ create_new_credentials() {
 }
 EOF
 
-    echo "$CREDENTIALS_FILE created successfully."
+    if [ $? -eq 0 ]; then
+        echo "$CREDENTIALS_FILE created successfully."
+    else
+        echo "Error: Failed to create $CREDENTIALS_FILE."
+        exit 1
+    fi
 }
 
 # Main script
 main() {
-    echo "Starting the nilchange.sh script..."
+    echo "Starting the advanced nilchange.sh script..."
 
     # Check if jq is installed
     if ! command -v jq &>/dev/null; then
@@ -65,9 +81,13 @@ main() {
         exit 1
     fi
 
-    remove_old_credentials
+    # Remove existing credentials.json if it exists
+    remove_existing_credentials
+
+    # Create a new credentials.json
     create_new_credentials
-    echo "Script execution completed."
+
+    echo "Script execution completed successfully."
 }
 
 # Run the main function

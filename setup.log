@@ -333,3 +333,417 @@ Enter the required input for titan.sh: 2024-11-17 09:59:21 - Attaching to the 't
 2024-11-17 09:59:21 - Waiting for 10 seconds to prevent CPU overloading...
 Do you want to run the volara service? (y/n, default: y): 2024-11-17 09:59:35 - Setup process completed successfully!
 2024-11-17 09:59:35 - Check the log file: /workspaces/testnode/setup.log for details.
+2024-12-04 16:58:37 - Starting setup process...
+2024-12-04 16:58:37 - Updating and upgrading system packages...
+2024-12-04 16:58:37 - Running: sudo apt update && sudo apt upgrade -y
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Get:1 https://packages.microsoft.com/repos/microsoft-ubuntu-focal-prod focal InRelease [3632 B]
+Hit:2 https://dl.yarnpkg.com/debian stable InRelease
+Hit:3 https://repo.anaconda.com/pkgs/misc/debrepo/conda stable InRelease
+Get:4 https://packages.microsoft.com/repos/microsoft-ubuntu-focal-prod focal/main amd64 Packages [323 kB]
+Hit:5 http://archive.ubuntu.com/ubuntu focal InRelease
+Get:6 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Get:7 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+Get:9 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+Get:10 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [1568 kB]
+Get:11 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [4109 kB]
+Hit:8 https://packagecloud.io/github/git-lfs/ubuntu focal InRelease
+Get:12 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [4581 kB]
+2024-12-04 16:59:34 - Starting setup process...
+2024-12-04 16:59:34 - Updating and upgrading system packages...
+2024-12-04 16:59:34 - Running: sudo apt update && sudo apt upgrade -y
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Err:1 https://packages.microsoft.com/repos/microsoft-ubuntu-focal-prod focal InRelease
+  Bad header line Bad header data [IP: 13.107.246.48 443]
+Hit:2 https://dl.yarnpkg.com/debian stable InRelease
+Hit:3 https://repo.anaconda.com/pkgs/misc/debrepo/conda stable InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu focal InRelease
+Get:5 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+Get:7 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Get:8 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [4109 kB]
+Get:9 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [1278 kB]
+Hit:6 https://packagecloud.io/github/git-lfs/ubuntu focal InRelease
+Get:10 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+Get:11 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [4581 kB]
+Get:12 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [1568 kB]
+Fetched 1661 kB in 3s (558 kB/s)
+Reading package lists...
+Building dependency tree...
+Reading state information...
+All packages are up to date.
+W: Failed to fetch https://packages.microsoft.com/repos/microsoft-ubuntu-focal-prod/dists/focal/InRelease  Bad header line Bad header data [IP: 13.107.246.48 443]
+W: Some index files failed to download. They have been ignored, or old ones used instead.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Calculating upgrade...
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+2024-12-04 16:59:40 - Installing screen utility...
+2024-12-04 16:59:40 - Running: sudo apt install screen -y
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+screen is already the newest version (4.8.0-1ubuntu0.1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+2024-12-04 16:59:42 - Installing jq JSON parser...
+2024-12-04 16:59:42 - Running: sudo apt-get install jq -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+jq is already the newest version (1.6-1ubuntu0.20.04.1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Do you want to run all services? (y/n, default: y): Do you want to run the vanamine service? (y/n, default: y): Do you want to run the blockmesh service? (y/n, default: y): Do you want to run the hemimine service? (y/n, default: y): Do you want to run the nillion service? (y/n, default: y): 2024-12-04 16:59:51 - Initializing Nillion verifier...
+2024-12-04 16:59:51 - Creating and running commands in screen: nillion
+2024-12-04 16:59:52 - Verifier initialization complete. Proceeding to custom key setup...
+Do you want to use custom keys for nillion? (y/n, default: n): 2024-12-04 16:59:53 - Setting up custom keys for Nillion...
+2024-12-04 16:59:53 - Running: chmod +x /workspaces/testnode/Nillion/nilchange.sh
+2024-12-04 16:59:53 - Running: /workspaces/testnode/Nillion/nilchange.sh
+Starting the nilchange.sh script...
+No existing /workspaces/testnode/Nillion/verifier/credentials.json found.
+Creating new /workspaces/testnode/Nillion/verifier/credentials.json...
+/workspaces/testnode/Nillion/nilchange.sh: line 41: /workspaces/testnode/Nillion/verifier/credentials.json: No such file or directory
+/workspaces/testnode/Nillion/verifier/credentials.json created successfully.
+Script execution completed.
+2024-12-04 16:59:53 - Starting Nillion verifier in detached mode...
+2024-12-04 16:59:53 - Running: docker run -d -v /workspaces/testnode/Nillion/nillion/verifier:/var/tmp nillion/verifier:v1.0.1 verify --rpc-endpoint 'https://testnet-nillion-rpc.lavenderfive.com'
+Unable to find image 'nillion/verifier:v1.0.1' locally
+v1.0.1: Pulling from nillion/verifier
+522c5096f821: Pulling fs layer
+f6b0d5d75856: Pulling fs layer
+e192384016bf: Pulling fs layer
+567c5968b0f0: Pulling fs layer
+7cbcffdfaf88: Pulling fs layer
+7cbcffdfaf88: Waiting
+f6b0d5d75856: Download complete
+e192384016bf: Download complete
+567c5968b0f0: Waiting
+567c5968b0f0: Verifying Checksum
+567c5968b0f0: Download complete
+522c5096f821: Pull complete
+7cbcffdfaf88: Verifying Checksum
+7cbcffdfaf88: Download complete
+f6b0d5d75856: Pull complete
+e192384016bf: Pull complete
+567c5968b0f0: Pull complete
+7cbcffdfaf88: Pull complete
+Digest: sha256:fb2b507019a35bc8cda396378382171e51c0f92e2bf5fbc4444f74c301aea368
+Status: Downloaded newer image for nillion/verifier:v1.0.1
+42592cf5692d969d2ff8f465f6a31c8f86e2ed59917c6185ff8f6e4d1bbb408e
+2024-12-04 16:59:59 - Detached screen: nillion
+2024-12-04 16:59:59 - Waiting for 10 seconds to prevent CPU overloading...
+Do you want to run the titan service? (y/n, default: y): 2024-12-04 17:05:52 - Starting setup process...
+2024-12-04 17:05:52 - Updating and upgrading system packages...
+2024-12-04 17:05:52 - Running: sudo apt update && sudo apt upgrade -y
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Err:1 https://packages.microsoft.com/repos/microsoft-ubuntu-focal-prod focal InRelease
+  Bad header line Bad header data [IP: 13.107.246.68 443]
+Hit:2 https://repo.anaconda.com/pkgs/misc/debrepo/conda stable InRelease
+Get:3 https://dl.yarnpkg.com/debian stable InRelease [17.1 kB]
+Hit:4 http://archive.ubuntu.com/ubuntu focal InRelease
+Hit:5 http://security.ubuntu.com/ubuntu focal-security InRelease
+Hit:6 http://archive.ubuntu.com/ubuntu focal-updates InRelease
+Hit:8 http://archive.ubuntu.com/ubuntu focal-backports InRelease
+Hit:7 https://packagecloud.io/github/git-lfs/ubuntu focal InRelease
+Fetched 17.1 kB in 2s (8099 B/s)
+Reading package lists...
+Building dependency tree...
+Reading state information...
+All packages are up to date.
+W: Failed to fetch https://packages.microsoft.com/repos/microsoft-ubuntu-focal-prod/dists/focal/InRelease  Bad header line Bad header data [IP: 13.107.246.68 443]
+W: Some index files failed to download. They have been ignored, or old ones used instead.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Calculating upgrade...
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+2024-12-04 17:05:56 - Installing screen utility...
+2024-12-04 17:05:56 - Running: sudo apt install screen -y
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+screen is already the newest version (4.8.0-1ubuntu0.1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+2024-12-04 17:05:58 - Installing jq JSON parser...
+2024-12-04 17:05:58 - Running: sudo apt-get install jq -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+jq is already the newest version (1.6-1ubuntu0.20.04.1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Do you want to run all services? (y/n, default: y): Do you want to run the vanamine service? (y/n, default: y): Do you want to run the blockmesh service? (y/n, default: y): Do you want to run the hemimine service? (y/n, default: y): Do you want to run the nillion service? (y/n, default: y): 2024-12-04 17:06:09 - Pulling Nillion verifier image...
+2024-12-04 17:06:09 - Running: docker pull nillion/verifier:v1.0.1
+v1.0.1: Pulling from nillion/verifier
+522c5096f821: Pulling fs layer
+f6b0d5d75856: Pulling fs layer
+e192384016bf: Pulling fs layer
+567c5968b0f0: Pulling fs layer
+7cbcffdfaf88: Pulling fs layer
+567c5968b0f0: Waiting
+7cbcffdfaf88: Waiting
+e192384016bf: Verifying Checksum
+e192384016bf: Download complete
+f6b0d5d75856: Verifying Checksum
+f6b0d5d75856: Download complete
+522c5096f821: Download complete
+567c5968b0f0: Verifying Checksum
+567c5968b0f0: Download complete
+7cbcffdfaf88: Verifying Checksum
+7cbcffdfaf88: Download complete
+522c5096f821: Pull complete
+f6b0d5d75856: Pull complete
+e192384016bf: Pull complete
+567c5968b0f0: Pull complete
+7cbcffdfaf88: Pull complete
+Digest: sha256:fb2b507019a35bc8cda396378382171e51c0f92e2bf5fbc4444f74c301aea368
+Status: Downloaded newer image for nillion/verifier:v1.0.1
+docker.io/nillion/verifier:v1.0.1
+2024-12-04 17:06:16 - Ensuring verifier directory exists...
+2024-12-04 17:06:16 - Running: mkdir -p /workspaces/testnode/Nillion/nillion/verifier
+2024-12-04 17:06:16 - Initializing Nillion verifier...
+2024-12-04 17:06:16 - Running: docker run -v /workspaces/testnode/Nillion/nillion/verifier:/var/tmp nillion/verifier:v1.0.1 initialise
+[2m2024-12-04T17:06:16.743928Z[0m [32m INFO[0m [2mverifier[0m[2m:[0m Connected to state database sqlite:///var/tmp/accuser.db
+[2m2024-12-04T17:06:16.744451Z[0m [32m INFO[0m [2mverifier[0m[2m:[0m Database migrations applied
+[2m2024-12-04T17:06:16.744786Z[0m [32m INFO[0m [2mverifier::credentials[0m[2m:[0m Credentials will be saved to /var/tmp/credentials.json
+[2m2024-12-04T17:06:16.744928Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m 
+[2m2024-12-04T17:06:16.744936Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[2m2024-12-04T17:06:16.744939Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m !!! Backup credentials.json, if you lose it you lose access to your verifier !!!
+[2m2024-12-04T17:06:16.744942Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[2m2024-12-04T17:06:16.744946Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m 
+[2m2024-12-04T17:06:16.744949Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m Verifier account id: nillion120fqkzzrfqljtjm62xu2dc0kwa79gj8snkug33
+[2m2024-12-04T17:06:16.744953Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m Verifier public key: 033a20677008a7266f1a48ef5ec377bd061229ed68f06b7df8bdce8abcd15f96a4
+[2m2024-12-04T17:06:16.744957Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m 
+2024-12-04 17:06:16 - Verifier initialization complete. Proceeding to custom key setup...
+Do you want to use custom keys for nillion? (y/n, default: n): 2024-12-04 17:06:27 - Setting up custom keys for Nillion...
+2024-12-04 17:06:27 - Running: chmod +x /workspaces/testnode/Nillion/nilchange.sh
+2024-12-04 17:06:27 - Running: /workspaces/testnode/Nillion/nilchange.sh
+Starting the nilchange.sh script...
+No existing /workspaces/testnode/Nillion/verifier/credentials.json found.
+Creating new /workspaces/testnode/Nillion/verifier/credentials.json...
+/workspaces/testnode/Nillion/nilchange.sh: line 41: /workspaces/testnode/Nillion/verifier/credentials.json: No such file or directory
+/workspaces/testnode/Nillion/verifier/credentials.json created successfully.
+Script execution completed.
+2024-12-04 17:06:27 - Starting Nillion verifier in detached mode...
+2024-12-04 17:06:27 - Running: docker run -d -v /workspaces/testnode/Nillion/nillion/verifier:/var/tmp nillion/verifier:v1.0.1 verify --rpc-endpoint 'https://testnet-nillion-rpc.lavenderfive.com'
+cbfd2883da63741472cb8066a3b7391704e538e6701d9abc2e24adeba4678016
+2024-12-04 17:06:27 - Detached screen: nillion
+2024-12-04 17:06:27 - Waiting for 10 seconds to prevent CPU overloading...
+Do you want to run the titan service? (y/n, default: y): 2024-12-04 17:09:10 - Invalid input, assuming default: y
+2024-12-04 17:09:10 - Creating and running commands in screen: titan
+2024-12-04 17:09:10 - Titan is running in a screen session. Waiting briefly to attach and provide input...
+2024-12-04 17:10:06 - Starting setup process...
+2024-12-04 17:10:06 - Updating and upgrading system packages...
+2024-12-04 17:10:06 - Running: sudo apt update && sudo apt upgrade -y
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Get:1 https://dl.yarnpkg.com/debian stable InRelease [17.1 kB]
+Hit:2 https://repo.anaconda.com/pkgs/misc/debrepo/conda stable InRelease
+Err:3 https://packages.microsoft.com/repos/microsoft-ubuntu-focal-prod focal InRelease
+  Bad header line Bad header data [IP: 13.107.246.68 443]
+Hit:4 http://archive.ubuntu.com/ubuntu focal InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu focal-updates InRelease
+Hit:6 http://archive.ubuntu.com/ubuntu focal-backports InRelease
+Hit:7 http://security.ubuntu.com/ubuntu focal-security InRelease
+Hit:8 https://packagecloud.io/github/git-lfs/ubuntu focal InRelease
+Fetched 17.1 kB in 2s (7454 B/s)
+Reading package lists...
+Building dependency tree...
+Reading state information...
+All packages are up to date.
+W: Failed to fetch https://packages.microsoft.com/repos/microsoft-ubuntu-focal-prod/dists/focal/InRelease  Bad header line Bad header data [IP: 13.107.246.68 443]
+W: Some index files failed to download. They have been ignored, or old ones used instead.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Calculating upgrade...
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+2024-12-04 17:10:11 - Installing screen utility...
+2024-12-04 17:10:11 - Running: sudo apt install screen -y
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+screen is already the newest version (4.8.0-1ubuntu0.1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+2024-12-04 17:10:12 - Installing jq JSON parser...
+2024-12-04 17:10:12 - Running: sudo apt-get install jq -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+jq is already the newest version (1.6-1ubuntu0.20.04.1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Do you want to run all services? (y/n, default: y): Do you want to run the vanamine service? (y/n, default: y): Do you want to run the blockmesh service? (y/n, default: y): Do you want to run the hemimine service? (y/n, default: y): Do you want to run the nillion service? (y/n, default: y): 2024-12-04 17:10:23 - Pulling Nillion verifier image...
+2024-12-04 17:10:23 - Running: docker pull nillion/verifier:v1.0.1
+v1.0.1: Pulling from nillion/verifier
+Digest: sha256:fb2b507019a35bc8cda396378382171e51c0f92e2bf5fbc4444f74c301aea368
+Status: Image is up to date for nillion/verifier:v1.0.1
+docker.io/nillion/verifier:v1.0.1
+2024-12-04 17:10:24 - Ensuring verifier directory exists...
+2024-12-04 17:10:24 - Running: mkdir -p /workspaces/testnode/Nillion/nillion/verifier
+2024-12-04 17:10:24 - Initializing Nillion verifier...
+2024-12-04 17:10:24 - Running: docker run -v /workspaces/testnode/Nillion/nillion/verifier:/var/tmp nillion/verifier:v1.0.1 initialise
+[2m2024-12-04T17:10:25.215136Z[0m [32m INFO[0m [2mverifier[0m[2m:[0m Connected to state database sqlite:///var/tmp/accuser.db
+[2m2024-12-04T17:10:25.231664Z[0m [32m INFO[0m [2mverifier[0m[2m:[0m Database migrations applied
+[2m2024-12-04T17:10:25.232110Z[0m [32m INFO[0m [2mverifier::credentials[0m[2m:[0m Credentials will be saved to /var/tmp/credentials.json
+[2m2024-12-04T17:10:25.232277Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m 
+[2m2024-12-04T17:10:25.232378Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[2m2024-12-04T17:10:25.232385Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m !!! Backup credentials.json, if you lose it you lose access to your verifier !!!
+[2m2024-12-04T17:10:25.232388Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[2m2024-12-04T17:10:25.232392Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m 
+[2m2024-12-04T17:10:25.232394Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m Verifier account id: nillion1upr67jkyjwvnsdmgkldgd3yglzhl6an2m4mlyz
+[2m2024-12-04T17:10:25.232397Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m Verifier public key: 033e75ba415bf3ae766862d37cc8f9d93c19df831cfc88bdb90c0dbb51330715d7
+[2m2024-12-04T17:10:25.232400Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m 
+2024-12-04 17:10:25 - Verifier initialization complete. Proceeding to custom key setup...
+Do you want to use custom keys for nillion? (y/n, default: n): 2024-12-04 17:10:53 - Setting up custom keys for Nillion...
+2024-12-04 17:10:53 - Running: chmod +x /workspaces/testnode/Nillion/nilchange.sh
+2024-12-04 17:10:53 - Running: /workspaces/testnode/Nillion/nilchange.sh
+Starting the nilchange.sh script...
+No existing /workspaces/testnode/Nillion/verifier/credentials.json found.
+Creating new /workspaces/testnode/Nillion/verifier/credentials.json...
+/workspaces/testnode/Nillion/nilchange.sh: line 41: /workspaces/testnode/Nillion/verifier/credentials.json: No such file or directory
+/workspaces/testnode/Nillion/verifier/credentials.json created successfully.
+Script execution completed.
+2024-12-04 17:10:53 - Starting Nillion verifier in detached mode...
+2024-12-04 17:10:53 - Running: docker run -d -v /workspaces/testnode/Nillion/nillion/verifier:/var/tmp nillion/verifier:v1.0.1 verify --rpc-endpoint 'https://testnet-nillion-rpc.lavenderfive.com'
+739c5976381ebd0911af222aba9a4dbda913c301d39f79ee17bc5fbc745e4a74
+2024-12-04 17:10:53 - Detached screen: nillion
+2024-12-04 17:10:53 - Waiting for 10 seconds to prevent CPU overloading...
+Do you want to run the titan service? (y/n, default: y): 2024-12-04 17:20:06 - Invalid input, assuming default: y
+Screen 'titan' already exists. Do you want to rerun this service? (y/n, default: n): 2024-12-04 17:25:02 - Starting setup process...
+2024-12-04 17:25:02 - Updating and upgrading system packages...
+2024-12-04 17:25:02 - Running: sudo apt update && sudo apt upgrade -y
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Err:1 https://packages.microsoft.com/repos/microsoft-ubuntu-focal-prod focal InRelease
+  Bad header line Bad header data [IP: 13.107.246.68 443]
+Hit:2 https://dl.yarnpkg.com/debian stable InRelease
+Hit:3 https://repo.anaconda.com/pkgs/misc/debrepo/conda stable InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu focal InRelease
+Hit:5 http://security.ubuntu.com/ubuntu focal-security InRelease
+Hit:6 http://archive.ubuntu.com/ubuntu focal-updates InRelease
+Hit:7 http://archive.ubuntu.com/ubuntu focal-backports InRelease
+Hit:8 https://packagecloud.io/github/git-lfs/ubuntu focal InRelease
+Reading package lists...
+Building dependency tree...
+Reading state information...
+All packages are up to date.
+W: Failed to fetch https://packages.microsoft.com/repos/microsoft-ubuntu-focal-prod/dists/focal/InRelease  Bad header line Bad header data [IP: 13.107.246.68 443]
+W: Some index files failed to download. They have been ignored, or old ones used instead.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Calculating upgrade...
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+2024-12-04 17:25:08 - Installing screen utility...
+2024-12-04 17:25:08 - Running: sudo apt install screen -y
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+screen is already the newest version (4.8.0-1ubuntu0.1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+2024-12-04 17:25:09 - Installing jq JSON parser...
+2024-12-04 17:25:09 - Running: sudo apt-get install jq -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+jq is already the newest version (1.6-1ubuntu0.20.04.1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Do you want to run all services? (y/n, default: y): Do you want to run the vanamine service? (y/n, default: y): Do you want to run the blockmesh service? (y/n, default: y): Do you want to run the hemimine service? (y/n, default: y): Do you want to run the nillion service? (y/n, default: y): 2024-12-04 17:25:19 - Pulling Nillion verifier image...
+2024-12-04 17:25:19 - Running: docker pull nillion/verifier:v1.0.1
+v1.0.1: Pulling from nillion/verifier
+522c5096f821: Pulling fs layer
+f6b0d5d75856: Pulling fs layer
+e192384016bf: Pulling fs layer
+567c5968b0f0: Pulling fs layer
+7cbcffdfaf88: Pulling fs layer
+567c5968b0f0: Waiting
+7cbcffdfaf88: Waiting
+e192384016bf: Verifying Checksum
+e192384016bf: Download complete
+f6b0d5d75856: Verifying Checksum
+f6b0d5d75856: Download complete
+522c5096f821: Verifying Checksum
+522c5096f821: Download complete
+567c5968b0f0: Verifying Checksum
+567c5968b0f0: Download complete
+7cbcffdfaf88: Verifying Checksum
+7cbcffdfaf88: Download complete
+522c5096f821: Pull complete
+f6b0d5d75856: Pull complete
+e192384016bf: Pull complete
+567c5968b0f0: Pull complete
+7cbcffdfaf88: Pull complete
+Digest: sha256:fb2b507019a35bc8cda396378382171e51c0f92e2bf5fbc4444f74c301aea368
+Status: Downloaded newer image for nillion/verifier:v1.0.1
+docker.io/nillion/verifier:v1.0.1
+2024-12-04 17:25:26 - Ensuring verifier directory exists...
+2024-12-04 17:25:26 - Running: mkdir -p /workspaces/testnode/Nillion/nillion/verifier
+2024-12-04 17:25:26 - Initializing Nillion verifier...
+2024-12-04 17:25:26 - Running: docker run -v /workspaces/testnode/Nillion/nillion/verifier:/var/tmp nillion/verifier:v1.0.1 initialise
+[2m2024-12-04T17:25:26.564557Z[0m [32m INFO[0m [2mverifier[0m[2m:[0m Connected to state database sqlite:///var/tmp/accuser.db
+[2m2024-12-04T17:25:26.582532Z[0m [32m INFO[0m [2mverifier[0m[2m:[0m Database migrations applied
+[2m2024-12-04T17:25:26.582798Z[0m [32m INFO[0m [2mverifier::credentials[0m[2m:[0m Credentials will be saved to /var/tmp/credentials.json
+[2m2024-12-04T17:25:26.583189Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m 
+[2m2024-12-04T17:25:26.583198Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[2m2024-12-04T17:25:26.583202Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m !!! Backup credentials.json, if you lose it you lose access to your verifier !!!
+[2m2024-12-04T17:25:26.583205Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[2m2024-12-04T17:25:26.583208Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m 
+[2m2024-12-04T17:25:26.583211Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m Verifier account id: nillion1z6nthl493q0jkrplyvzgqwyx2ctsn60fleem2k
+[2m2024-12-04T17:25:26.583214Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m Verifier public key: 034a1dee3f61b52a748e976d0406abbbd07962ee45bcf6e4e078cfe1159caf82fc
+[2m2024-12-04T17:25:26.583216Z[0m [33m WARN[0m [2mverifier[0m[2m:[0m 
+2024-12-04 17:25:26 - Verifier initialization complete. Proceeding to custom key setup...
+Do you want to use custom keys for nillion? (y/n, default: n): 2024-12-04 17:25:31 - Setting up custom keys for Nillion...
+2024-12-04 17:25:31 - Running: chmod +x /workspaces/testnode/Nillion/nilchange.sh
+2024-12-04 17:25:31 - Running: /workspaces/testnode/Nillion/nilchange.sh
+Starting the advanced nilchange.sh script...
+Existing /workspaces/testnode/Nillion/nillion/verifier/credentials.json found. Deleting it...
+Successfully deleted /workspaces/testnode/Nillion/nillion/verifier/credentials.json.
+Creating new /workspaces/testnode/Nillion/nillion/verifier/credentials.json...
+/workspaces/testnode/Nillion/nillion/verifier/credentials.json created successfully.
+Script execution completed successfully.
+2024-12-04 17:25:32 - Starting Nillion verifier in detached mode...
+2024-12-04 17:25:32 - Running: docker run -d -v /workspaces/testnode/Nillion/nillion/verifier:/var/tmp nillion/verifier:v1.0.1 verify --rpc-endpoint 'https://testnet-nillion-rpc.lavenderfive.com'
+68fa14c6d0293f875a9d4fdcd959de5101e3a3edef9393e7dd6effb4b0e8c8d9
+2024-12-04 17:25:32 - Detached screen: nillion
+2024-12-04 17:25:32 - Waiting for 10 seconds to prevent CPU overloading...
+Do you want to run the titan service? (y/n, default: y): Screen 'titan' already exists. Do you want to rerun this service? (y/n, default: n): 2024-12-04 17:27:45 - Stopping existing screen: titan
+2024-12-04 17:27:45 - Creating and running commands in screen: titan
+2024-12-04 17:27:45 - Titan is running in a screen session. Waiting briefly to attach and provide input...
+2024-12-04 17:27:50 - Prompting the user for input...
+Enter the required input for titan.sh: 2024-12-04 17:28:19 - Attaching to the 'titan' screen session to provide input...
+2024-12-04 17:28:19 - Input sent to the 'titan' screen session. Detaching...
+2024-12-04 17:28:19 - Waiting for 10 seconds to prevent CPU overloading...
+Enter the hash key for Titan binding: 2024-12-04 17:28:43 - Running Titan bind command with hash key...
+2024-12-04 17:28:43 - Running: docker run --rm -it -v ~/.titanedge:/root/.titanedge nezha123/titan-edge bind --hash=6F1AE94D-6C39-4CAC-99C6-718F56972577 https://api-test1.container1.titannet.io/api/v2/device/binding
+2024-12-04 17:28:44 - Setup process completed successfully!
+2024-12-04 17:28:44 - Check the log file: /workspaces/testnode/setup.log for details.
