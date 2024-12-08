@@ -40,9 +40,13 @@ else
 fi
 
 # Install Docker Compose
-echo "Installing Docker Compose..."
-curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+if ! command -v docker-compose &> /dev/null; then
+    echo "Installing Docker Compose..."
+    curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose
+else
+    echo "Docker Compose is already installed, skipping installation..."
+fi
 
 # Verify BlockMesh CLI executable in the extracted directory
 if [[ ! -f target/release/blockmesh-cli ]]; then
@@ -50,12 +54,27 @@ if [[ ! -f target/release/blockmesh-cli ]]; then
     exit 1
 fi
 
-# Use BlockMesh CLI to create a Docker container
-echo "Creating Docker container for BlockMesh CLI..."
-docker run -it --rm \
-    --name blockmesh-cli-container \
-    -v $(pwd)/target/release:/app \
-    -e EMAIL="$EMAIL" \
-    -e PASSWORD="$PASSWORD" \
-    --workdir /app \
-    ubuntu:22.04 ./blockmesh-cli --email "$EMAIL" --password "$PASSWORD"
+# Define container name
+CONTAINER_NAME="blockmesh-cli-container"
+
+# Check if the container already exists
+if docker ps -a --format '{{.Names}}' | grep -Eq "^${CONTAINER_NAME}$"; then
+    echo "Container ${CONTAINER_NAME} already exists."
+
+    # Check if the container is running
+    if docker ps --format '{{.Names}}' | grep -Eq "^${CONTAINER_NAME}$"; then
+        echo "Container is already running."
+    else
+        echo "Starting the container..."
+        docker start "${CONTAINER_NAME}"
+    fi
+else
+    echo "Creating a new Docker container for BlockMesh CLI..."
+    docker run -it -d \
+        --name "${CONTAINER_NAME}" \
+        -v $(pwd)/target/release:/app \
+        -e EMAIL="${EMAIL}" \
+        -e PASSWORD="${PASSWORD}" \
+        --workdir /app \
+        ubuntu:22.04 ./blockmesh-cli --email "${EMAIL}" --password "${PASSWORD}"
+fi
