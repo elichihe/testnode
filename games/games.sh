@@ -24,14 +24,14 @@ get_non_empty_input() {
 load_device_identifiers() {
     local env_file="mac.env"
     if [ ! -f "$env_file" ]; then
-        echo -e "${ERROR}Error: The file $env_file does not exist. Please create it with MAC_ADDRESS and UUID variables.${NC}"
+        echo -e "${ERROR}Error: The file $env_file does not exist. Please create it with required variables.${NC}"
         exit 1
     fi
 
     # Source the file
     source "$env_file"
 
-    # Validate MAC_ADDRESS and UUID
+    # Validate MAC_ADDRESS, UUID, USER_DID, and DEVICE_ID
     if [[ -z "$MAC_ADDRESS" ]]; then
         echo -e "${ERROR}Error: MAC_ADDRESS is not defined in $env_file.${NC}"
         exit 1
@@ -40,9 +40,19 @@ load_device_identifiers() {
         echo -e "${ERROR}Error: UUID is not defined in $env_file.${NC}"
         exit 1
     fi
+    if [[ -z "$USER_DID" ]]; then
+        echo -e "${ERROR}Error: USER_DID is not defined in $env_file.${NC}"
+        exit 1
+    fi
+    if [[ -z "$DEVICE_ID" ]]; then
+        echo -e "${ERROR}Error: DEVICE_ID is not defined in $env_file.${NC}"
+        exit 1
+    fi
 
     echo -e "${INFO}Loaded MAC_ADDRESS: $MAC_ADDRESS${NC}"
     echo -e "${INFO}Loaded UUID: $UUID${NC}"
+    echo -e "${INFO}Loaded USER_DID: $USER_DID${NC}"
+    echo -e "${INFO}Loaded DEVICE_ID: $DEVICE_ID${NC}"
 }
 
 # Load identifiers
@@ -60,14 +70,16 @@ fi
 
 # Step 1: Create the Dockerfile
 echo -e "${INFO}Creating the Dockerfile...${NC}"
-cat << 'EOL' > "$device_dir/Dockerfile"
+cat << EOL > "$device_dir/Dockerfile"
 FROM ubuntu:latest
 WORKDIR /app
 RUN apt-get update && apt-get install -y bash curl jq make gcc bzip2 lbzip2 vim git lz4 telnet build-essential net-tools wget tcpdump systemd dbus iptables iproute2 nano
 RUN curl -L https://github.com/Impa-Ventures/coa-launch-binaries/raw/main/linux/amd64/compute/launcher -o launcher && \
     curl -L https://github.com/Impa-Ventures/coa-launch-binaries/raw/main/linux/amd64/compute/worker -o worker
 RUN chmod +x ./launcher && chmod +x ./worker
-CMD ["/bin/bash", "-c", "exec /bin/bash"]
+
+# Run the launcher command and keep the container alive
+CMD ./launcher --user_did=$USER_DID --device_id=$DEVICE_ID --device_name=$DEVICE_NAME && tail -f /dev/null
 EOL
 
 # Step 4: Write the UUID to a file
@@ -84,7 +96,7 @@ device_name_lower=$(echo "$device_name" | tr '[:upper:]' '[:lower:]')
 
 # Step 6: Build the Docker image specific to this device
 echo -e "${INFO}Building the Docker image 'alliance_games_docker_$device_name_lower'...${NC}"
-docker build -t "alliance_games_docker_$device_name_lower" "$device_dir"
+docker build --build-arg USER_DID="$USER_DID" --build-arg DEVICE_ID="$DEVICE_ID" --build-arg DEVICE_NAME="$device_name" -t "alliance_games_docker_$device_name_lower" "$device_dir"
 
 echo -e "${SUCCESS}Congratulations! The Docker container '${device_name}' has been successfully set up with predefined identifiers.${NC}"
 echo -e "${WARNING}Now copy and paste the 3rd command from AG Device Initialization board in the following command prompt...${NC}"

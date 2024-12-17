@@ -1,0 +1,4 @@
+2024/12/09 19:06:17.503|INFO|Start NodeAPI |MultipleRouter.ClientServer.HostedService.ClientAPIHostedService|
+2024/12/09 19:06:17.525|INFO|Application started. Press Ctrl+C to shut down. |Microsoft.Hosting.Lifetime|
+2024/12/09 19:06:17.532|INFO|Hosting environment: Production |Microsoft.Hosting.Lifetime|EnvName=Production
+2024/12/09 19:06:17.532|INFO|Content root path: /workspaces/testnode/multipleforlinux |Microsoft.Hosting.Lifetime|ContentRoot=/workspaces/testnode/multipleforlinux
