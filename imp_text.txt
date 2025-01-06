@@ -6,6 +6,8 @@ dos2unix daily.sh
 
 chmod +x daily.sh && ./daily.sh
 
+chmod +x clean.sh && ./clean.sh
+
 chmod +x rivalz.sh && ./rivalz.sh
 
 chmod +x blockmesh.sh && ./blockmesh.sh
@@ -14,5 +16,8 @@ chmod +x blockmesh.sh && ./blockmesh.sh
 chmod +x games.sh && ./games.sh
 
 
+sudo fuser -k 6080/tcp
 
-docker run -d -e PRIVATE_KEY=key --name glacier-verifier docker.io/glaciernetwork/glacier-verifier:v0.0.3
+
+websockify -D --web=/usr/share/novnc/ --cert="$HOME/novnc.pem" 6080 localhost:5901
+
