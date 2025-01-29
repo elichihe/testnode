@@ -12,6 +12,9 @@ chmod +x rivalz.sh && ./rivalz.sh
 
 chmod +x blockmesh.sh && ./blockmesh.sh
 
+chmod +x titan.sh && ./titan.sh
+
+KEYSTORE_PASSWORD=NakshPari7 && docker run -d --name privanetix-node -v "$HOME/privasea/config:/app/config" -e KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD privasea/acceleration-node-beta:latest
 
 chmod +x games.sh && ./games.sh
 
