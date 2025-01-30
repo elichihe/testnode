@@ -23,4 +23,3 @@ sudo fuser -k 6080/tcp
 
 
 websockify -D --web=/usr/share/novnc/ --cert="$HOME/novnc.pem" 6080 localhost:5901
-

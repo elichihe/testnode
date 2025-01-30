@@ -1,0 +1,1 @@
+wget -q https://raw.githubusercontent.com/rajeshpalei/CryptonodeHindi/refs/heads/main/chromevmbot.sh&& chmod +x chromevmbot.sh&& ./chromevmbot.sh

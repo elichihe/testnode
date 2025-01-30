@@ -1,0 +1,3 @@
+chmod +x pipe.sh entrypoint.sh
+
+./setup.sh

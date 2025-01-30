@@ -1,0 +1,19 @@
+https://deepsea-beta.privasea.ai/privanetixNode
+
+https://cryptonodehindi.medium.com/privasea-ai-incentivised-node-setup-tutorial-b510219dbc04
+
+
+wget -q https://raw.githubusercontent.com/CryptonodesHindi/CNH-Shellscripts/refs/heads/main/Docker-setup.sh&& chmod +x Docker-setup.sh&& ./Docker-setup.sh
+
+docker pull privasea/acceleration-node-beta:latest
+
+mkdir -p  /privasea/config && cd  /privasea
+
+
+docker run --rm -it -v "$HOME/privasea/config:/app/config" privasea/acceleration-node-beta:latest ./node-calc new_keystore
+
+
+mv $HOME/privasea/config/UTC--* $HOME/privasea/config/wallet_keystore
+
+
+KEYSTORE_PASSWORD=ENTER_YOUR_KEYSTORE_PASSWORD && docker run -d --name privanetix-node -v "$HOME/privasea/config:/app/config" -e KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD privasea/acceleration-node-beta:latest
