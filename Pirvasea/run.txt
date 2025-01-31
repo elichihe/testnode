@@ -1,0 +1,1 @@
+chmod +x privasea.sh && ./privasea.sh

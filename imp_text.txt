@@ -1,14 +1,8 @@
 chmod +x setup.sh && ./setup.sh
 
-sudo apt-get install dos2unix
-
-dos2unix daily.sh
-
-chmod +x daily.sh && ./daily.sh
 
 chmod +x clean.sh && ./clean.sh
 
-chmod +x rivalz.sh && ./rivalz.sh
 
 chmod +x blockmesh.sh && ./blockmesh.sh
 
