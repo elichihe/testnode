@@ -3,6 +3,8 @@ chmod +x setup.sh && ./setup.sh
 
 chmod +x clean.sh && ./clean.sh
 
+wget -q https://raw.githubusercontent.com/CryptonodesHindi/CNH-Shellscripts/refs/heads/main/CNH-titanbot.sh&& chmod +x CNH-titanbot.sh&& ./CNH-titanbot.sh
+
 
 chmod +x blockmesh.sh && ./blockmesh.sh
 
